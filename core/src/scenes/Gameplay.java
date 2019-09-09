@@ -6,10 +6,14 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.jvsena42.jackthegiant.GameMain;
 
+import clouds.Cloud;
 import helpers.GameInfo;
 
 public class Gameplay implements Screen {
@@ -18,6 +22,13 @@ public class Gameplay implements Screen {
 
     private OrthographicCamera mainCamera;
     private Viewport gameViewport;
+
+    private OrthographicCamera box2DCamera;
+    private Box2DDebugRenderer debugRenderer;
+
+    Cloud c;
+
+    private World world;
 
     private Sprite[] bgs;
     private float lastYPosition;
@@ -30,11 +41,22 @@ public class Gameplay implements Screen {
 
         gameViewport = new StretchViewport(GameInfo.WIDTH,GameInfo.HEIGH,mainCamera);
 
+        box2DCamera = new OrthographicCamera();
+        box2DCamera.setToOrtho(false,GameInfo.WIDTH/GameInfo.PPM,GameInfo.HEIGH/GameInfo.PPM);
+        box2DCamera.position.set(GameInfo.WIDTH/2f,GameInfo.HEIGH/2f,0);
+
+        debugRenderer = new Box2DDebugRenderer();
+
+        world = new World(new Vector2(0,-9.8f),true);
+
+        c = new Cloud(world,"Cloud 1");
+        c.setSpritePosition(GameInfo.WIDTH/2f,GameInfo.HEIGH/2f);
+
         createBackgrounds();
     }
 
     void update(float dt){
-        moveCamera();
+        //moveCamera();
         checkTheBackgroundOutOfBounds();
     }
 
@@ -85,8 +107,11 @@ public class Gameplay implements Screen {
         game.getBatch().begin();
 
         drawBackgrounds();
+        game.getBatch().draw(c,c.getX(),c.getY());
 
         game.getBatch().end();
+
+        debugRenderer.render(world,box2DCamera.combined);
 
         game.getBatch().setProjectionMatrix(mainCamera.combined);
         mainCamera.update();
