@@ -14,6 +14,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.jvsena42.jackthegiant.GameMain;
 
 import clouds.Cloud;
+import clouds.CloudsController;
 import helpers.GameInfo;
 
 public class Gameplay implements Screen {
@@ -26,7 +27,7 @@ public class Gameplay implements Screen {
     private OrthographicCamera box2DCamera;
     private Box2DDebugRenderer debugRenderer;
 
-    Cloud c;
+    private CloudsController cloudsController;
 
     private World world;
 
@@ -49,19 +50,18 @@ public class Gameplay implements Screen {
 
         world = new World(new Vector2(0,-9.8f),true);
 
-        c = new Cloud(world,"Cloud 1");
-        c.setSpritePosition(GameInfo.WIDTH/2f,GameInfo.HEIGH/2f);
+        cloudsController = new CloudsController(world);
 
         createBackgrounds();
     }
 
     void update(float dt){
-        //moveCamera();
+        moveCamera();
         checkTheBackgroundOutOfBounds();
     }
 
     void moveCamera (){
-        mainCamera.position.y -=1;
+        mainCamera.position.y -=1.5;
     }
 
     public void createBackgrounds(){
@@ -107,11 +107,12 @@ public class Gameplay implements Screen {
         game.getBatch().begin();
 
         drawBackgrounds();
-        game.getBatch().draw(c,c.getX(),c.getY());
+
+        cloudsController.drawClouds(game.getBatch());
 
         game.getBatch().end();
 
-        debugRenderer.render(world,box2DCamera.combined);
+        //debugRenderer.render(world,box2DCamera.combined);
 
         game.getBatch().setProjectionMatrix(mainCamera.combined);
         mainCamera.update();
