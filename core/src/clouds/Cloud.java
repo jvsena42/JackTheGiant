@@ -17,6 +17,9 @@ public class Cloud extends Sprite {
     public Body body;
     public String cloudName;
 
+    public boolean isDrawLeft;
+
+
     public Cloud(World world, String cloudName){
         super(new Texture("Clouds/"+cloudName+".png"));
         this.world = world;
@@ -50,4 +53,11 @@ public class Cloud extends Sprite {
         return this.cloudName;
     }
 
+    public boolean getDrawLeft() {
+        return isDrawLeft;
+    }
+
+    public void setDrawLeft(boolean drawLeft) {
+        isDrawLeft = drawLeft;
+    }
 }

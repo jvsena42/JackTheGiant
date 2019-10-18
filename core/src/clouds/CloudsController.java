@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import helpers.GameInfo;
+import player.Player;
 
 public class CloudsController {
 
@@ -73,9 +74,11 @@ public class CloudsController {
                 if (controlX==0){
                     tempX = randomBetweenNumbers(maxX-60, maxX);
                     controlX =1;
+                    c.setDrawLeft(false);
                 }else {
                     tempX = randomBetweenNumbers(minX+60 , minX);
                     controlX=0;
+                    c.setDrawLeft(true);
                 }
 
                 c.setSpritePosition(tempX , positionY);
@@ -89,7 +92,11 @@ public class CloudsController {
 
     public void drawClouds (SpriteBatch batch){
         for (Cloud c : clouds){
-            batch.draw(c, c.getX() ,c.getY()-c.getY()/2f);
+            if (c.getDrawLeft()){
+                batch.draw(c, c.getX()-10 ,c.getY());
+            }else {
+                batch.draw(c, c.getX() ,c.getY());
+            }
 
         }
     }
@@ -110,6 +117,12 @@ public class CloudsController {
 
     public void setCameraY (float cameraY){
         this.cameraY = cameraY;
+    }
+
+    public Player positionThePlayer(Player player){
+
+        player = new Player(world,clouds.get(0).getX(), clouds.get(0).getY()+100);
+        return player;
     }
 
     private float randomBetweenNumbers (float min, float max){

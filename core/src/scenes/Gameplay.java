@@ -16,6 +16,7 @@ import com.jvsena42.jackthegiant.GameMain;
 import clouds.Cloud;
 import clouds.CloudsController;
 import helpers.GameInfo;
+import player.Player;
 
 public class Gameplay implements Screen {
 
@@ -28,6 +29,8 @@ public class Gameplay implements Screen {
     private Box2DDebugRenderer debugRenderer;
 
     private CloudsController cloudsController;
+
+    private Player player;
 
     private World world;
 
@@ -51,6 +54,8 @@ public class Gameplay implements Screen {
         world = new World(new Vector2(0,-9.8f),true);
 
         cloudsController = new CloudsController(world);
+
+        player = cloudsController.positionThePlayer(player);
 
         createBackgrounds();
     }
@@ -112,12 +117,17 @@ public class Gameplay implements Screen {
 
         cloudsController.drawClouds(game.getBatch());
 
+        player.drawPlayer(game.getBatch());
+
         game.getBatch().end();
 
-        //debugRenderer.render(world,box2DCamera.combined);
+        debugRenderer.render(world,box2DCamera.combined);
 
         game.getBatch().setProjectionMatrix(mainCamera.combined);
         mainCamera.update();
+
+        player.updatePlayer();
+        world.step(Gdx.graphics.getDeltaTime(),6,2);
     }
 
     @Override
