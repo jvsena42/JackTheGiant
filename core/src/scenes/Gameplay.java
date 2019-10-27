@@ -66,6 +66,8 @@ public class Gameplay implements Screen {
             player.movePlayer(-2);
         }else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
             player.movePlayer(2);
+        }else {
+            player.setWalking(false);
         }
     }
 
@@ -127,7 +129,8 @@ public class Gameplay implements Screen {
 
         cloudsController.drawClouds(game.getBatch());
 
-        player.drawPlayer(game.getBatch());
+        player.drawPlayerIdle(game.getBatch());
+        player.drawPlayerAnimation(game.getBatch());
 
         game.getBatch().end();
 
