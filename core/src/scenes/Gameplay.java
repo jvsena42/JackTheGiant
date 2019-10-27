@@ -1,6 +1,7 @@
 package scenes;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -60,8 +61,17 @@ public class Gameplay implements Screen {
         createBackgrounds();
     }
 
+    public void handleImput(float dt){
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)){
+            player.movePlayer(-2);
+        }else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
+            player.movePlayer(2);
+        }
+    }
+
     void update(float dt){
-        moveCamera();
+        handleImput(dt);
+        //moveCamera();
         checkTheBackgroundOutOfBounds();
         cloudsController.setCameraY(mainCamera.position.y);
         cloudsController.createAndArrangeNewClouds();
