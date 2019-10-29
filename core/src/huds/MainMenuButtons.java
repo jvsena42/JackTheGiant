@@ -16,6 +16,7 @@ import com.jvsena42.jackthegiant.GameMain;
 
 import helpers.GameInfo;
 import scenes.Gameplay;
+import scenes.Highscore;
 
 public class MainMenuButtons {
 
@@ -75,7 +76,7 @@ public class MainMenuButtons {
         highScoreBtn.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-
+                game.setScreen(new Highscore(game));
             }
         });
 
