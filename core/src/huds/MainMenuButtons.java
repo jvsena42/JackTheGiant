@@ -1,10 +1,13 @@
 package huds;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -12,6 +15,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.jvsena42.jackthegiant.GameMain;
 
 import helpers.GameInfo;
+import scenes.Gameplay;
 
 public class MainMenuButtons {
 
@@ -32,7 +36,10 @@ public class MainMenuButtons {
 
         stage = new Stage(gameViewport,game.getBatch());
 
+        Gdx.input.setInputProcessor(stage);
+
         createAndPositionButtons();
+        addAllListeners();
 
         stage.addActor(playBtn);
         stage.addActor(highScoreBtn);
@@ -54,6 +61,44 @@ public class MainMenuButtons {
         optionsBtn.setPosition(GameInfo.WIDTH/2f - 40f,GameInfo.HEIGH/2f - 90f, Align.center);
         quitBtn.setPosition(GameInfo.WIDTH/2f - 20f,GameInfo.HEIGH/2f - 160f, Align.center);
         musicBtn.setPosition(GameInfo.WIDTH/2f - 13,13, Align.bottomRight);
+    }
+
+    void addAllListeners(){
+
+        playBtn.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                game.setScreen(new Gameplay(game));
+            }
+        });
+
+        highScoreBtn.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+
+            }
+        });
+
+        optionsBtn.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+
+            }
+        });
+
+        quitBtn.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+
+            }
+        });
+
+        musicBtn.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+
+            }
+        });
     }
 
     public Stage getStage(){
