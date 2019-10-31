@@ -10,6 +10,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.jvsena42.jackthegiant.GameMain;
 
 import helpers.GameInfo;
+import huds.HighscoreButtons;
 
 public class Highscore implements Screen {
 
@@ -19,6 +20,8 @@ public class Highscore implements Screen {
     private Viewport gameViewport;
 
     private Texture bg;
+
+    private HighscoreButtons btns;
 
     public Highscore(GameMain game){
         this.game = game;
@@ -31,6 +34,7 @@ public class Highscore implements Screen {
 
         bg = new Texture("Backgrounds/Highscore BG.png");
 
+        btns = new HighscoreButtons(game);
     }
 
     @Override
@@ -48,11 +52,14 @@ public class Highscore implements Screen {
         game.getBatch().draw(bg,0,0);
 
         game.getBatch().end();
+
+        game.getBatch().setProjectionMatrix(btns.getStage().getCamera().combined);
+        btns.getStage().draw();
     }
 
     @Override
     public void resize(int width, int height) {
-
+        gameViewport.update(width,height);
     }
 
     @Override
