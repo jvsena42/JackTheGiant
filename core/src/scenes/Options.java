@@ -10,6 +10,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.jvsena42.jackthegiant.GameMain;
 
 import helpers.GameInfo;
+import huds.OptionsButtons;
 
 public class Options implements Screen {
 
@@ -19,6 +20,8 @@ public class Options implements Screen {
     private Viewport gameViewport;
 
     private Texture bg;
+
+    private OptionsButtons btns;
 
     public Options(GameMain game) {
         this.game = game;
@@ -30,6 +33,8 @@ public class Options implements Screen {
         gameViewport = new StretchViewport(GameInfo.WIDTH,GameInfo.HEIGH,mainCamera);
 
         bg = new Texture("Backgrounds/Options BG.png");
+
+        btns = new OptionsButtons(game);
 
     }
 
@@ -48,6 +53,9 @@ public class Options implements Screen {
         game.getBatch().draw(bg,0,0);
 
         game.getBatch().end();
+
+        game.getBatch().setProjectionMatrix(btns.getStage().getCamera().combined);
+        btns.getStage().draw();
 
     }
 
@@ -73,6 +81,7 @@ public class Options implements Screen {
 
     @Override
     public void dispose() {
-
+        btns.getStage().dispose();
+        bg.dispose();
     }
 }
