@@ -46,7 +46,7 @@ public class Player extends Sprite {
         body.setFixedRotation(true);
 
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox((getWidth()/2f)/GameInfo.PPM,(getHeight()/2f)/GameInfo.PPM);
+        shape.setAsBox((getWidth()/2f-10f)/GameInfo.PPM,(getHeight()/2f)/GameInfo.PPM);
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.density = 4f;
         fixtureDef.friction = 2f;
@@ -59,7 +59,15 @@ public class Player extends Sprite {
     }
 
     public void updatePlayer (){
-        setPosition(body.getPosition().x*GameInfo.PPM,body.getPosition().y*GameInfo.PPM);
+
+        if(body.getLinearVelocity().x>0){
+            //Going right
+            setPosition((body.getPosition().x+0.3f)*GameInfo.PPM,body.getPosition().y*GameInfo.PPM);
+        }else if (body.getLinearVelocity().x<0){
+            //Going left
+            setPosition((body.getPosition().x-0.1f)*GameInfo.PPM,body.getPosition().y*GameInfo.PPM);
+
+        }
     }
 
     public void drawPlayerIdle(SpriteBatch batch){
