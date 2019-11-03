@@ -21,6 +21,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.jvsena42.jackthegiant.GameMain;
 
 import helpers.GameInfo;
+import scenes.MainMenu;
 
 public class UiHud {
 
@@ -28,11 +29,11 @@ public class UiHud {
     private Stage stage;
     private Viewport gameViewport;
 
-    private Image coinImg, lifeImg, scoreImg;
+    private Image coinImg, lifeImg, scoreImg, pausePanel;
 
     private Label coinLabel, scoreLabel, lifeLabel;
 
-    private ImageButton pauseBtn;
+    private ImageButton pauseBtn, resumeBtn, quitBtn;
 
     public UiHud(GameMain game) {
         this.game = game;
@@ -98,10 +99,46 @@ public class UiHud {
         pauseBtn.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                //Code for pausing the game
+                //Pause the game
+                createPausePanel();
             }
         });
 
+    }
+
+    public void createPausePanel(){
+        pausePanel = new Image(new Texture("Pause/Pause Panel.png"));
+        resumeBtn = new ImageButton(new SpriteDrawable( new Sprite(new Texture("Pause/Resume.png"))));
+        quitBtn = new ImageButton(new SpriteDrawable( new Sprite(new Texture("Pause/Quit 2.png"))));
+
+        pausePanel.setPosition(GameInfo.WIDTH/2f,GameInfo.HEIGH/2f,Align.center);
+        resumeBtn.setPosition(GameInfo.WIDTH/2f,GameInfo.HEIGH/2f+50f,Align.center);
+        quitBtn.setPosition(GameInfo.WIDTH/2f,GameInfo.HEIGH/2f-80f,Align.center);
+
+        resumeBtn.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                removePausePanel();
+            }
+        });
+
+        quitBtn.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                game.setScreen(new MainMenu(game));
+            }
+        });
+
+        stage.addActor(pausePanel);
+        stage.addActor(resumeBtn);
+        stage.addActor(quitBtn);
+
+    }
+
+    public void removePausePanel(){
+        pausePanel.remove();
+        resumeBtn.remove();
+        quitBtn.remove();
     }
 
     public Stage getStage() {
