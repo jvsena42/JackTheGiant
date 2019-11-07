@@ -9,6 +9,10 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.Contact;
+import com.badlogic.gdx.physics.box2d.ContactImpulse;
+import com.badlogic.gdx.physics.box2d.ContactListener;
+import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -20,7 +24,7 @@ import helpers.GameInfo;
 import huds.UiHud;
 import player.Player;
 
-public class Gameplay implements Screen {
+public class Gameplay implements Screen, ContactListener {
 
     private GameMain game;
 
@@ -133,6 +137,7 @@ public class Gameplay implements Screen {
         drawBackgrounds();
 
         cloudsController.drawClouds(game.getBatch());
+        cloudsController.drawCollectables(game.getBatch());
 
         player.drawPlayerIdle(game.getBatch());
         player.drawPlayerAnimation(game.getBatch());
@@ -174,6 +179,26 @@ public class Gameplay implements Screen {
 
     @Override
     public void dispose() {
+
+    }
+
+    @Override
+    public void beginContact(Contact contact) {
+
+    }
+
+    @Override
+    public void endContact(Contact contact) {
+
+    }
+
+    @Override
+    public void preSolve(Contact contact, Manifold oldManifold) {
+
+    }
+
+    @Override
+    public void postSolve(Contact contact, ContactImpulse impulse) {
 
     }
 }

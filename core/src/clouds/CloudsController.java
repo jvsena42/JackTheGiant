@@ -8,6 +8,7 @@ import com.badlogic.gdx.utils.Array;
 import java.util.ArrayList;
 import java.util.Random;
 
+import collectables.Collectable;
 import helpers.GameInfo;
 import player.Player;
 
@@ -16,6 +17,7 @@ public class CloudsController {
     private World world;
 
     private Array<Cloud> clouds = new Array<>();
+    private Array<Collectable> collectables = new Array<Collectable>();
 
     private final float DISTANCE_BETWEEN_CLOUDS = 300f;
     private float minX,maxX;
@@ -88,6 +90,12 @@ public class CloudsController {
             }
 
         }
+
+        //Remove this later
+        Collectable c1 = new Collectable(world,"Coin");
+        c1.setCollectablePosition(clouds.get(1).getX(),clouds.get(1).getY());
+
+        collectables.add(c1);
     }
 
     public void drawClouds (SpriteBatch batch){
@@ -99,6 +107,14 @@ public class CloudsController {
             }
 
         }
+    }
+
+    public void drawCollectables(SpriteBatch batch){
+        for (Collectable c: collectables){
+            c.updateCollectable();
+            batch.draw(c,c.getX(),c.getY());
+        }
+
     }
 
     public void createAndArrangeNewClouds(){
