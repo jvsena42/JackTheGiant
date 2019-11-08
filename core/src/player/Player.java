@@ -50,9 +50,13 @@ public class Player extends Sprite {
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.density = 4f;
         fixtureDef.friction = 2f;
+        fixtureDef.filter.categoryBits = GameInfo.PLAYER;
+        fixtureDef.filter.maskBits = GameInfo.DEFAULT | GameInfo.COLLECTABLE;
+
         fixtureDef.shape = shape;
 
         Fixture fixture = body.createFixture(fixtureDef);
+        fixture.setUserData("Player");
 
         shape.dispose();
 

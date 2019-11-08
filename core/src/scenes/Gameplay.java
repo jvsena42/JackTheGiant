@@ -12,6 +12,7 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
@@ -62,6 +63,7 @@ public class Gameplay implements Screen, ContactListener {
         hud = new UiHud(game);
 
         world = new World(new Vector2(0,-9.8f),true);
+        world.setContactListener(this);
 
         cloudsController = new CloudsController(world);
 
@@ -184,7 +186,25 @@ public class Gameplay implements Screen, ContactListener {
 
     @Override
     public void beginContact(Contact contact) {
+        Fixture body1,body2;
 
+        if (contact.getFixtureA().getUserData() == "Player"){
+            body1 = contact.getFixtureA();
+            body2 = contact.getFixtureB();
+        }else {
+            body1 = contact.getFixtureB();
+            body2 = contact.getFixtureA();
+        }
+
+        if (body1.getUserData() == "Player" && body2.getUserData() == "Coin"){
+            //Collided with the coin
+            System.out.println("Collided with COIN");
+        }
+
+        if (body1.getUserData() == "Player" && body2.getUserData() == "Life"){
+            //Collided with the life
+            System.out.println("Collided with LIFE");
+        }
     }
 
     @Override
