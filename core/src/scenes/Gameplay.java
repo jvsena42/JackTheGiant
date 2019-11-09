@@ -198,12 +198,14 @@ public class Gameplay implements Screen, ContactListener {
 
         if (body1.getUserData() == "Player" && body2.getUserData() == "Coin"){
             //Collided with the coin
-            System.out.println("Collided with COIN");
+            body2.setUserData("Remove");
+            cloudsController.removeCollectables();
         }
 
         if (body1.getUserData() == "Player" && body2.getUserData() == "Life"){
             //Collided with the life
-            System.out.println("Collided with LIFE");
+            body2.setUserData("Remove");
+            cloudsController.removeCollectables();
         }
     }
 
