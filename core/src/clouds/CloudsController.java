@@ -87,15 +87,52 @@ public class CloudsController {
 
                 positionY -= DISTANCE_BETWEEN_CLOUDS;
                 lastCloudPositionY = positionY;
+
+                if (!firstTimeArranging && c.getCloudName() != "Dark Cloud"){
+                    int rand = random.nextInt(10);
+
+                    if (rand > 5){
+                        int randonCollectable = random.nextInt(2);
+                        if (randonCollectable == 0){
+
+                            //Span a life, if the life counter is < 2
+                            Collectable collectable = new Collectable(world,"Life");
+                            collectable.setCollectablePosition(c.getX(),c.getY());
+                            collectables.add(collectable);
+
+                        }else {
+                            //Span a coin
+                            Collectable collectable = new Collectable(world,"Coin");
+                            collectable.setCollectablePosition(c.getX(),c.getY());
+                            collectables.add(collectable);
+                        }
+                    }
+                }
+            }
+
+            if (!firstTimeArranging && c.getCloudName() != "Dark Cloud"){
+                int rand = random.nextInt(10);
+
+                if (rand > 5){
+                    int randonCollectable = random.nextInt(2);
+                    if (randonCollectable == 0){
+
+                        //Span a life, if the life counter is < 2
+                        Collectable collectable = new Collectable(world,"Life");
+                        collectable.setCollectablePosition(c.getX(),c.getY());
+                        collectables.add(collectable);
+
+                    }else {
+                        //Span a coin
+                        Collectable collectable = new Collectable(world,"Coin");
+                        collectable.setCollectablePosition(c.getX(),c.getY());
+                        collectables.add(collectable);
+                    }
+                }
             }
 
         }
 
-        //Remove this later
-        Collectable c1 = new Collectable(world,"Coin");
-        c1.setCollectablePosition(clouds.get(1).getX(),clouds.get(1).getY());
-
-        collectables.add(c1);
     }
 
     public void drawClouds (SpriteBatch batch){
